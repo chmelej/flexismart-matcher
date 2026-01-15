@@ -26,9 +26,20 @@ def get_invoices(company,cond):
 def get_bank(company,cond):
     return jsonify({"winstrom": {"banka": bank}})
 
-@app.route('/c/<company>/sparovani', methods=['POST'])
-def post_pairing(company):
-    # Simulace úspěšného spárování
+@app.route('/c/<company>/banka/<id>/sparovani.json', methods=['PUT'])
+def put_pairing_specific(company, id):
+    # Simulace spárování konkrétního dokladu
+    return jsonify({"winstrom": {"results": [{"status": "OK"}]}})
+
+@app.route('/c/<company>/prijata-zaloha.json', methods=['POST'])
+def post_zaloha(company):
+    # Simulace vytvoření zálohy
+    # Return a fake ID ref
+    return jsonify({"winstrom": {"results": [{"ref": "code:ZDP_MOCK_1", "status": "OK"}]}})
+
+@app.route('/c/<company>/vazba-mezi-doklady.json', methods=['POST'])
+def post_vazba(company):
+    # Simulace vazby
     return jsonify({"winstrom": {"results": [{"status": "OK"}]}})
 
 if __name__ == '__main__':
