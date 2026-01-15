@@ -32,5 +32,5 @@ def anonymize(data_type):
     with open(f'mock_{data_type}.json', 'w') as f:
         json.dump(data, f, indent=2)
 
-# anonymize('invoices')
-# anonymize('bank')
+anonymize('invoices')
+anonymize('bank')
