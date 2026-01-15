@@ -17,13 +17,13 @@ try:
 except FileNotFoundError:
     print("Warning: mock_bank.json not found. Serving empty list.")
 
-@app.route('/c/<company>/faktura-vydana.json', methods=['GET'])
-def get_invoices(company):
+@app.route('/c/<company>/faktura-vydana/<cond>.json', methods=['GET'])
+def get_invoices(company,cond):
     # Simulace filtru pro neuhrazené
     return jsonify({"winstrom": {"faktura-vydana": invoices}})
 
-@app.route('/c/<company>/banka.json', methods=['GET'])
-def get_bank(company):
+@app.route('/c/<company>/banka/<cond>.json', methods=['GET'])
+def get_bank(company,cond):
     return jsonify({"winstrom": {"banka": bank}})
 
 @app.route('/c/<company>/sparovani', methods=['POST'])
