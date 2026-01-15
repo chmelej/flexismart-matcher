@@ -1,10 +1,14 @@
 import requests
 import json
+import os
 
 class FlexiClient:
     def __init__(self, url, user, password, company):
         self.base_url = f"{url}/c/{company}"
         self.auth = (user, password)
+        self.detail_fields = "custom:id,kod,varSym,sumCelkem,buc,nazev,datVyst,mena,popis"
+        self.start_date = os.environ.get("SYNC_START_DATE", "2024-01-01")
+        self.end_date = os.environ.get("SYNC_END_DATE", "2026-01-01")
 
     def get(self, endpoint, params=None):
         url = f"{self.base_url}/{endpoint}.json"
@@ -24,16 +28,23 @@ class FlexiClient:
         response.raise_for_status()
         return response.json()
 
+    def _get_date_filter(self):
+        return f"(datVyst >= '{self.start_date}' and datVyst < '{self.end_date}')"
+
     def fetch_unpaid_invoices(self):
         # GET /faktura-vydana?(stavUhrK is null or stavUhrK = 'stavUhr.cast_uhrazeno')
-        query = "(stavUhrK is null or stavUhrK = 'stavUhr.cast_uhrazeno')"
-        return self.get("faktura-vydana", params={"detail": "full", "filter": query})
+        base_query = "(stavUhrK is null or stavUhrK = 'stavUhr.cast_uhrazeno')"
+        date_query = self._get_date_filter()
+        query = f"{base_query} and {date_query}"
+        return self.get("faktura-vydana", params={"detail": self.detail_fields, "filter": query})
 
     def fetch_new_payments(self):
         # GET /banka (filtrovat nespárované)
         # Bankovní doklady filtruj na sparovano = false.
-        query = "sparovano = false"
-        return self.get("banka", params={"detail": "full", "filter": query})
+        base_query = "sparovano = false"
+        date_query = self._get_date_filter()
+        query = f"{base_query} and {date_query}"
+        return self.get("banka", params={"detail": self.detail_fields, "filter": query})
 
     def post_pairing(self, payment_id, invoice_id, amount=None):
         # Endpoint: PUT /c/{firma}/banka/{id}/sparovani

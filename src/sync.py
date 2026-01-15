@@ -19,6 +19,16 @@ def create_app():
     db.init_app(app)
     return app
 
+def parse_date(date_str):
+    if not date_str:
+        return None
+    # Bezpecne parsovani data: vezmeme prvnich 10 znaku (YYYY-MM-DD)
+    # Teto format je konzistentni pro FlexiBee vystupy
+    try:
+        return datetime.strptime(date_str[:10], '%Y-%m-%d').date()
+    except ValueError:
+        return None
+
 def sync_and_match():
     app = create_app()
     client = FlexiClient(FLEXI_URL, FLEXI_USER, FLEXI_PASS, FLEXI_COMPANY)
@@ -56,7 +66,7 @@ def sync_and_match():
                     v_symbol=payment.get('varSym'),
                     account_number=payment.get('buc'),
                     sender_name=payment.get('nazev'), # Or 'nazFirmy' depending on field
-                    date_received=datetime.fromisoformat(payment.get('datVyst')).date() if payment.get('datVyst') else None,
+                    date_received=parse_date(payment.get('datVyst')),
                     status='PENDING'
                 )
                 db.session.add(tx)
@@ -81,7 +91,9 @@ def sync_and_match():
                 inv_obj.v_symbol = invoice.get('varSym')
                 inv_obj.amount = Decimal(invoice.get('sumCelkem', 0))
                 inv_obj.customer_account = invoice.get('buc')
-                inv_obj.customer_name = invoice.get('nazev') # or firma.nazev
+                # Pouzijeme 'popis' pro fuzzy match, pokud existuje, jinak 'nazev'
+                # casto byva jmeno ve zprave/popisu
+                inv_obj.customer_name = invoice.get('popis') or invoice.get('nazev')
                 inv_obj.id = invoice.get('id')
                 inv_obj.code = invoice.get('kod')
 
