@@ -1,0 +1,34 @@
+[
+  {
+    "id": "121778",
+    "lastUpdate": "2025-12-03T10:28:13.166+01:00",
+    "kod": "B+17733/2025",
+    "datVyst": "2025-12-01+01:00",
+    "sumCelkem": "350.0",
+    "sumCelkemMen": "0.0",
+    "mena": "code:CZK",
+    "mena@ref": "/c/czela_test/mena/31.json",
+    "mena@showAs": "CZK: Ceska koruna",
+    "firma": "code:5194",
+    "firma@ref": "/c/czela_test/adresar/2762.json",
+    "firma@showAs": "5194: AAA MMM",
+    "popis": "Anonymizovany popis",
+    "nazev": "Z\u00e1kazn\u00edk_1"
+  },
+  {
+    "id": "121779",
+    "lastUpdate": "2025-12-03T10:28:10.148+01:00",
+    "kod": "B+17734/2025",
+    "datVyst": "2025-12-01+01:00",
+    "sumCelkem": "350.0",
+    "sumCelkemMen": "0.0",
+    "mena": "code:CZK",
+    "mena@ref": "/c/czela_test/mena/31.json",
+    "mena@showAs": "CZK: Ceska koruna",
+    "firma": "code:7981",
+    "firma@ref": "/c/czela_test/adresar/2250.json",
+    "firma@showAs": "7981: MMM MMM",
+    "popis": "Anonymizovany popis",
+    "nazev": "Z\u00e1kazn\u00edk_1"
+  }
+]

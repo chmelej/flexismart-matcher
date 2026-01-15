@@ -14,7 +14,7 @@ def anonymize(data_type):
 
     for item in data:
         # Anonymizace jména/firmy
-        real_name = item.get('nazev', 'Neznámý')
+        real_name = item.get('nazev', 'Neznamy')
         if real_name not in names_map:
             names_map[real_name] = f"Zákazník_{len(names_map) + 1}"
         item['nazev'] = names_map[real_name]
@@ -27,10 +27,10 @@ def anonymize(data_type):
 
         # Vymazání citlivých poznámek
         if 'popis' in item:
-            item['popis'] = "Anonymizovaný popis"
+            item['popis'] = "Anonymizovany popis"
 
     with open(f'mock_{data_type}.json', 'w') as f:
         json.dump(data, f, indent=2)
 
-# anonymize('invoices')
-# anonymize('bank')
+anonymize('invoices')
+anonymize('bank')
