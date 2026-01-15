@@ -56,7 +56,7 @@ def sync_and_match():
                     v_symbol=payment.get('varSym'),
                     account_number=payment.get('buc'),
                     sender_name=payment.get('nazev'), # Or 'nazFirmy' depending on field
-                    date_received=datetime.strptime(payment.get('datVyst'), '%Y-%m-%d').date() if payment.get('datVyst') else None,
+                    date_received=datetime.fromisoformat(payment.get('datVyst')).date() if payment.get('datVyst') else None,
                     status='PENDING'
                 )
                 db.session.add(tx)
