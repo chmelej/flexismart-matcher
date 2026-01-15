@@ -1,0 +1,37 @@
+{
+  "prijata-zaloha": {
+    "winstrom": {
+      "prijata-zaloha": [
+        {
+          "typDokl": "code:ZÁLOHA",
+          "firma": "code:ZAK001",
+          "popis": "Automatický kredit - předplatné (Smart Matcher)",
+          "sumCelkem": "1000.0",
+          "mena": "code:CZK",
+          "bezPolozek": true,
+          "stavUhrK": "stavUhr.uhrazeno",
+          "datVyst": "2024-05-20"
+        }
+      ]
+    }
+  },
+  "vazba-mezi-doklady": {
+    "winstrom": {
+      "vazba-mezi-doklady": [
+        {
+          "a": "code:BAN01/2024/005",
+          "b": "code:ZDP01/2024/001",
+          "typVazbyK": "typVazby.uhrada"
+        }
+      ]
+    }
+  },
+  "odpocet-zalohy": {
+    "winstrom": {
+      "odpocet-zalohy": {
+        "zaloha": "code:ZDP01/2024/001",
+        "castka": "1000.0"
+      }
+    }
+  }
+}
